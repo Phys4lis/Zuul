@@ -6,15 +6,21 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <vector>
+#include "room.h"
+#include <map>
 
-void introduction();
+void introduction(vector<room*> Rooms);
 void getHelp();
 int validInput();
 
 using namespace std;
 
 int main() {
-  introduction();
+
+  map<char*, room*> exits;
+  vector<room*> Rooms;
+  introduction(Rooms);
   bool running = true;
   while (running == true) {
     int input = validInput();
@@ -46,7 +52,7 @@ int main() {
   }
 }
 
-void introduction() {
+void introduction(vector<room*> Rooms) {
    cout << "Maybe visiting your parents' old mansion for summer break wasn't the best idea. Neither was choosing to fly there at midnight." << endl;
   cout << "." << endl;
   cout << "." << endl;
@@ -55,6 +61,45 @@ void introduction() {
   cout << "." << endl;
   cout << "Perhaps a golden key will save you, but for now, you're stuck in the mansion." << endl;
   cout << "Enter 'help' if you ever require assistance" << endl << endl;
+
+  // Create the rooms
+  room* entranceExit = new room();
+  room* grandHall = new room();
+  room* basement = new room();
+  room* magicCircle = new room();
+  room* library = new room();
+  room* diningHall = new room();
+  room* garden = new room();
+  room* forest = new room();
+  room* centralStairway = new room();
+  room* commonRooms = new room();
+  room* childrensRoom = new room();
+  room* closet = new room();
+  room* balcony = new room();
+  room* masterBedroom = new room();
+  room* changingRoom = new room();
+  room* bathroom = new room();
+
+  // Add rooms to vector
+  Rooms.push_back(entranceExit);
+  Rooms.push_back(grandHall);
+  Rooms.push_back(basement);
+  Rooms.push_back(magicCircle);
+  Rooms.push_back(library);
+  Rooms.push_back(diningHall);
+  Rooms.push_back(garden);
+  Rooms.push_back(forest);
+  Rooms.push_back(centralStairway);
+  Rooms.push_back(commonRooms);
+  Rooms.push_back(childrensRoom);
+  Rooms.push_back(closet);
+  Rooms.push_back(balcony);
+  Rooms.push_back(masterBedroom);
+  Rooms.push_back(changingRoom);
+  Rooms.push_back(bathroom);
+
+  // Mapping
+  map[1] = entranceExit;
 }
 
 void getHelp() {
