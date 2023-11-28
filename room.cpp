@@ -7,8 +7,12 @@ room::room() {
   
 }
 
-void room::setRoomId(int x) {
-  roomId = x;
+char* room::getDescription() {
+  return description;
+}
+
+void room::setRoomID(int x) {
+  roomID = x;
 }
 
 void room::setExitW(int a) {

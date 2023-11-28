@@ -9,7 +9,7 @@ class room {
  public:
   room();
   char description[1000];
-  int roomId;
+  int roomID;
   int exitW;
   int exitN;
   int exitE;
@@ -20,7 +20,9 @@ class room {
   bool hasExitE;
   bool hasExitS;
 
-  void setRoomId(int x);
+  char* getDescription();
+  
+  void setRoomID(int x);
   void setExitW(int a);
   void setExitN(int b);
   void setExitE(int c);
