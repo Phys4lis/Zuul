@@ -1,5 +1,8 @@
 #include <iostream>
+#include <map>
+#include <cstring>
 #include "room.h"
+
 
 using namespace std;
 
@@ -15,7 +18,21 @@ void room::setRoomID(int x) {
   roomID = x;
 }
 
-void room::setExitW(int a) {
+void room::setExit(char* dir, room* ro) {
+  exits.insert(pair<char*, room*>(dir, ro)); 
+}
+
+room* room::getExit(char* input) {
+  for (map<char*, room*>::iterator iter = exits.begin(); iter != exits.end(); iter++) {
+    if (strcmp(iter->first, input) == 0) {
+      return iter->second;
+    }
+  }
+  return NULL;
+}
+
+	      
+/*void room::setExitW(int a) {
   exitW = a;
 }
 
@@ -29,7 +46,5 @@ void room::setExitE(int c) {
 
 void room::setExitS(int d) {
   exitS = d;
-}
-
-
+  }*/
 

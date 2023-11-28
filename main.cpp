@@ -10,17 +10,17 @@
 #include "room.h"
 #include <map>
 
-void introduction(vector<room*> &Rooms);
+void introduction();
+void createRooms(vector<room*> &Rooms); 
 void getHelp();
 int validInput();
 
 using namespace std;
 
 int main() {
-
-  map<char*, room*> exits;
   vector<room*> Rooms;
-  introduction(Rooms);
+  introduction();
+  createRooms(Rooms);
   bool running = true;
   while (running == true) {
     int input = validInput();
@@ -67,7 +67,7 @@ int main() {
   }
 }
 
-void introduction(vector<room*> &Rooms) {
+void introduction() {
   cout << endl << "Maybe visiting your parents' old mansion for summer break wasn't the best idea. Neither was choosing to fly there at midnight." << endl;
   cout << "." << endl;
   cout << "." << endl;
@@ -76,56 +76,104 @@ void introduction(vector<room*> &Rooms) {
   cout << "." << endl;
   cout << "Perhaps a golden key will save you, but for now, you're stuck in the mansion." << endl;
   cout << "Enter 'help' if you ever require assistance" << endl << endl;
+}
 
+void createRooms(vector<room*> &Rooms) {
   // Create the rooms
   room* entranceExit = new room();
+  room* grandHall = new room();
+  room* basement = new room();
+  room* magicCircle = new room();
+  room* library = new room();
+  room* diningHall = new room();
+  room* garden = new room();
+  room* centralStairway = new room();
+  room* forest = new room();
+  room* commonRooms = new room();
+  room* childrensRoom = new room();
+  room* closet = new room();
+  room* balcony = new room();
+  room* masterBedroom = new room();
+  room* changingRoom = new room();
+  room* bathroom = new room();
+  
+  char* dir = new char[10];
   strcpy(entranceExit->description, "A wave of uneasiness washes over you. The grand hall in front of you appears more ominous than grand...");
   entranceExit->roomID = 0;
-  room* grandHall = new room();
+  entranceExit->setExit(strcpy(dir, "north"), grandHall);
+  
   strcpy(grandHall->description, "You glance around the hall, wondering if a key could be hidden behind any of the gigantic paintings hung up on the walls. You try to move a painting but it doesn't budge. The key must be in another room.");
   grandHall->roomID = 1;
-  room* basement = new room();
+  grandHall->setExit(strcpy(dir, "west"), basement);
+  grandHall->setExit(strcpy(dir, "north"), centralStairway);
+  grandHall->setExit(strcpy(dir, "east"), diningHall);
+  grandHall->setExit(strcpy(dir, "south"), entranceExit);
+  
   strcpy(basement->description, "You look under a table and find a rusty trapdoor. Letting your curiosity get the better of you, you crawl through a dusty tunnel and find youself in...a basement?");
   basement->roomID = 2;
-  room* magicCircle = new room();
+  basement->setExit(strcpy(dir, "east"), grandHall);
+  basement->setExit(strcpy(dir, "south"), magicCircle);
+  
   strcpy(magicCircle->description, "A faint glow beckons you forward, but you regret your decision as you realize you're standing in the middle of a magic circle. Are you about to become the subject of an experiment?");
   magicCircle->roomID = 3;
-  room* library = new room();
+  magicCircle->setExit(strcpy(dir, "north"), basement);
+  magicCircle->setExit(strcpy(dir, "west"), library);
+  
   strcpy(library->description, "Running for your life, you stumble through a broken door and wind up in the most aesthetic library you've ever seen. You also notice a shimmering silver key located on one of the library's many smooth oak tables.");
   library->roomID = 4;
-  room* diningHall = new room();
+  library->setExit(strcpy(dir, "east"), magicCircle);
+  
   strcpy(diningHall->description, "Tables, chairs, candles, and broken chandeliers line the dining hall. Where's the food?");
   diningHall->roomID = 5;
-  room* garden = new room();
+  diningHall->setExit(strcpy(dir, "west"), grandHall);
+  diningHall->setExit(strcpy(dir, "north"), garden);
+  
   strcpy(garden->description, "Past the dining hall is an extensive garden overgrown with weeds. What a shame.");
   garden->roomID = 6;
-  room* forest = new room();
+  garden->setExit(strcpy(dir, "east"), forest);
+  
   strcpy(forest->description, "Bored of the dead flowers and prickly weeds, you venture into the forest, where a strong stench of blood stains the air...you look down and spot a pile of gold coins...alongside a bunch of ragged clothes...what happened here?");
   forest->roomID = 7;
-  room* centralStairway = new room();
+  forest->setExit(strcpy(dir, "west"), garden);
+  
   strcpy(centralStairway->description, "In front of you is a spiralling staircase that honestly seems like a pain to climb...but you nonetheless keep climbing knowing that there's a chance that the key is located upstairs.");
   centralStairway->roomID = 8;
-  room* commonRooms = new room();
+  centralStairway->setExit(strcpy(dir, "south"), grandHall);
+  centralStairway->setExit(strcpy(dir, "north"), commonRooms);
+  
   strcpy(commonRooms->description, "A warm fireplace is the first thing you've encountered that suggests that maybe this mansion isn't haunted. But then again, why is the fireplace burning in the first place?");
-  commonRoom->roomID = 9;
-  room* childrensRoom = new room();
+  commonRooms->roomID = 9;
+  commonRooms->setExit(strcpy(dir, "west"), masterBedroom);
+  commonRooms->setExit(strcpy(dir, "north"), balcony);
+  commonRooms->setExit(strcpy(dir, "east"), childrensRoom);
+  commonRooms->setExit(strcpy(dir, "south"), centralStairway);
+  
   strcpy(childrensRoom->description, "A room empty except for a couple of toys and a singular bunkbed. Is this really the room of children?");
   childrensRoom->roomID = 10;
-  room* closet = new room();
+  childrensRoom->setExit(strcpy(dir, "west"), commonRooms);
+  childrensRoom->setExit(strcpy(dir, "east"), closet);
+  
   strcpy(closet->description, "The closet contains a singular doll. A one-eyed ragged doll with a half stitched on leg and a creepy grin.");
   closet->roomID = 11;
-  room* balcony = new room();
+  closet->setExit(strcpy(dir, "west"), childrensRoom);
+  
   strcpy(balcony->description, "A balcony! Freedom at last! You internally ready yourself to jump...and then you remember that the mansion is situated on a cliff...best to not fall to your death...");
   balcony->roomID = 12;
-  room* masterBedroom = new room();
+  balcony->setExit(strcpy(dir, "south"), commonRooms);
+  
   strcpy(masterBedroom->description, "You enter the master bedroom with your silver key and immediately become drowsy. A sweet scent enters your noise, and you realize you need to hurry up before your brain shuts down.");
   masterBedroom->roomID = 13;
-  room* changingRoom = new room();
+  masterBedroom->setExit(strcpy(dir, "west"), bathroom);
+  masterBedroom->setExit(strcpy(dir, "north"), changingRoom);
+  masterBedroom->setExit(strcpy(dir, "east"), commonRooms);
+  
   strcpy(changingRoom->description, "Racks of clothes and...is that a golden key??");
   changingRoom->roomID = 14;
-  room* bathroom = new room();
+  changingRoom->setExit(strcpy(dir, "south"), masterBedroom);
+  
   strcpy(bathroom->description, "An ordinary bathroom with an ordinary sink and an unordinary toothbrush. Since when were toothbrushes sharp?");
   bathroom->roomID = 15;
+  bathroom->setExit(strcpy(dir, "east"), masterBedroom);
   
   // Add rooms to vector
   Rooms.push_back(entranceExit);

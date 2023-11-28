@@ -2,6 +2,7 @@
 #define ROOM_H
 
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -10,6 +11,8 @@ class room {
   room();
   char description[1000];
   int roomID;
+  map<char*, room*> exits;
+  
   int exitW;
   int exitN;
   int exitE;
@@ -23,10 +26,13 @@ class room {
   char* getDescription();
   
   void setRoomID(int x);
-  void setExitW(int a);
-  void setExitN(int b);
-  void setExitE(int c);
-  void setExitS(int d);
+  void setExit(char* dir, room* room);
+  room* getExit(char* input);
+
+  //void setExitW(int a);
+  //void setExitN(int b);
+  //void setExitE(int c);
+  //void setExitS(int d);
   
   bool hasBedroomKey;
   bool hasGrandKey;
