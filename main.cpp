@@ -112,7 +112,7 @@ int main() {
   closet->roomID = 11;
   closet->setExit(west, childrensRoom);
   
-  strcpy(balcony->description, "A balcony! Freedom at last! You internally ready yourself to jump...and then you remember that the mansion is situated on a cliff...best to not fall to your death...");
+  strcpy(balcony->description, "A balcony! Freedom at last! You internally ready yourself to jump...and then you remember that the mansion is situated on a cliff...best not to fall to your death...");
   balcony->roomID = 12;
   balcony->setExit(south, commonRooms);
   
@@ -148,6 +148,19 @@ int main() {
   Rooms.push_back(changingRoom);
   Rooms.push_back(bathroom);
 
+  // Set items
+  library->hasBedroomKey = true;
+  bool playerHasBedroomKey = false;
+  changingRoom->hasGrandKey = true;
+  bool playerHasGrandKey = false;
+  forest->hasCoins = true;
+  bool playerHasCoins = false;
+  closet->hasDoll = true;
+  bool playerHasDoll = false;
+  bathroom->hasToothbrush = true;
+  bool playerHasToothbrush = false;
+
+  // Set starting room
   room* currentRoom = entranceExit;
   
   bool running = true;
@@ -166,42 +179,155 @@ int main() {
 	cin.get(direction, 10);
 	cin.get();
 	if (currentRoom->getExit(direction) == NULL) {
-	  cout << "There isn't a room there!" << endl << endl;
+	  cout << endl << "There isn't a room there!" << endl << endl;
 	}
 	else {
 	  currentRoom = currentRoom->getExit(direction);
 	  cout << endl << currentRoom->getDescription() << endl << endl;
+	  cout << "The exits are:" << endl;
+	  if (currentRoom->getExit(north) != NULL) {
+	    cout << "north ";
+	  }
+	  if (currentRoom->getExit(east) != NULL) {
+	    cout << "east ";
+	  }
+	  if (currentRoom->getExit(south) != NULL) {
+	    cout << "south ";
+	  }
+	  if (currentRoom->getExit(west) != NULL) {
+	    cout << "west ";
+	  }
+	  cout << endl << endl;
+	  if (currentRoom->hasBedroomKey == true || currentRoom->hasGrandKey == true || currentRoom->hasCoins == true || currentRoom->hasDoll == true || currentRoom->hasToothbrush == true) {
+	    cout << "The items in this room include: " << endl;
+	    if (currentRoom->hasBedroomKey == true) {
+	      cout << "bedroom key ";
+	    }
+	    if (currentRoom->hasGrandKey == true) {
+	      cout << "grand key ";
+	    }
+	    if (currentRoom->hasCoins == true) {
+	      cout << "coins ";
+	    }
+	    if (currentRoom->hasDoll == true) {
+	      cout << "doll ";
+	    }
+	    if (currentRoom->hasToothbrush == true) {
+	      cout << "toothbrush ";
+	    }
+	    cout << endl << endl;
+	  }
 	  running2 = false;
 	}
       }
-      /* if ((strcmp(direction, "west") == 0) || (strcmp(direction, "WEST") == 0)) {
-	  
-	}
-	else if ((strcmp(direction, "north") == 0) || (strcmp(direction, "NORTH") == 0)) {
-	  
-	}
-	else if ((strcmp(direction, "east") == 0) || (strcmp(direction, "EAST") == 0)) {
-	  
-	}
-	else if ((strcmp(direction, "south") == 0) || (strcmp(direction, "SOUTH") == 0)) {
-	  
-	}
-	else {
-	  cout << "Please enter 'west', 'east', 'north', or 'south'." << endl;
-	  } */
-      //}
     }
     // Inventory command
     else if (input == 3) {
-
+      int numOfItems = 0;
+      cout << endl << "Your inventory currently contains: ";
+      if (playerHasBedroomKey == true) {
+	cout << "bedroom key ";
+	numOfItems++;
+      }
+      if (playerHasGrandKey == true) {
+	cout << "grand key ";
+	numOfItems++;
+      }
+      if (playerHasCoins == true) {
+	cout << "coins ";
+	numOfItems++;
+      }
+      if (playerHasDoll == true) {
+	cout << "doll ";
+	numOfItems++;
+      }
+      if (playerHasToothbrush == true) {
+	cout << "toothbrush ";
+	numOfItems++;
+      }
+      if (numOfItems == 0) {
+	cout << "...nothing";
+      }
+      cout << endl << endl;
     }
     // Get command
     else if (input == 4) {
-
+      // Check if the room has any of the five items
+      if (currentRoom->hasBedroomKey == true || currentRoom->hasGrandKey == true || currentRoom->hasCoins == true || currentRoom->hasDoll == true || currentRoom->hasToothbrush == true) {
+	cout << "What item would you like to get?" << endl;
+	char input[40];
+	cin.get(input, 40);
+	cin.get();
+	if ((currentRoom->hasBedroomKey == true) && (strcmp(input, "bedroom key") == 0)) {
+	  cout << endl << "You have picked up a bedroom key.";
+	  playerHasBedroomKey = true;
+	  currentRoom->hasBedroomKey = false;
+	}
+	if ((currentRoom->hasGrandKey == true) && (strcmp(input, "grand key") == 0)) {
+	  cout << endl << "You have picked up a grand key.";
+	  playerHasGrandKey = true;
+	  currentRoom->hasGrandKey = false;
+	}
+	if ((currentRoom->hasCoins == true) && (strcmp(input, "coins") == 0)) {
+	  cout << endl << "You have picked up some coins.";
+	  playerHasCoins = true;
+	  currentRoom->hasCoins = false;
+	}
+	if ((currentRoom->hasDoll == true) && (strcmp(input, "doll") == 0)) {
+	  cout << endl << "You have picked up a doll.";
+	  playerHasDoll = true;
+	  currentRoom->hasDoll = false;
+	}
+	if ((currentRoom->hasToothbrush == true) && (strcmp(input, "toothbrush") == 0)) {
+	  cout << endl << "You have picked up a toothbrush.";
+	  playerHasToothbrush = true;
+	  currentRoom->hasToothbrush = false;
+	}
+	cout << endl << endl;
+      }
+      // If the room doesn't have any of the 5 items
+      else {
+	cout << endl << "There aren't any items in this room!" << endl << endl;
+      }
     }
     // Drop command
     else if (input == 5) {
-
+      if (playerHasBedroomKey == true || playerHasGrandKey == true || playerHasCoins == true || playerHasDoll == true || playerHasToothbrush == true) {
+	cout << "What would you like to drop?" << endl;
+	char input[40];
+	cin.get(input, 40);
+	cin.get();
+	cout << endl;
+	if ((playerHasBedroomKey == true) && (strcmp(input, "bedroom key") == 0)) {
+	  cout << "You have dropped your bedroom key.";
+	  playerHasBedroomKey = false;
+	  currentRoom->hasBedroomKey = true;
+	}
+	if ((playerHasGrandKey == true) && (strcmp(input, "grand key") == 0)){
+	  cout << "You have dropped your grand key.";
+	  playerHasGrandKey = false;
+	  currentRoom->hasGrandKey = true;
+	}
+	if ((playerHasCoins == true) && (strcmp(input, "coins") == 0)) {
+	  cout << "You have dropped your coins.";
+	  playerHasCoins = false;
+	  currentRoom->hasCoins = true;
+	}
+	if ((playerHasDoll == true) && (strcmp(input, "doll") == 0)) {
+	  cout << "You have dropped your doll.";
+	  playerHasDoll = false;
+	  currentRoom->hasDoll = true;
+	}
+	if ((playerHasToothbrush == true) && (strcmp(input, "toothbrush") == 0)) {
+	  cout << "You have dropped your toothbrush.";
+	  playerHasToothbrush = false;
+	  currentRoom->hasToothbrush = true;
+	}
+	cout << endl << endl;
+      }
+      else {
+	cout << endl << "You don't have any items to drop!" << endl << endl;
+      }
     }
     // Quit command
     else if (input == 6) {
@@ -220,11 +346,10 @@ void introduction() {
   cout << "." << endl;
   cout << "Perhaps a golden key will save you, but for now, you're stuck in the mansion." << endl;
   cout << "Enter 'help' if you ever require assistance" << endl << endl;
+  cout << "There are exits:" << endl;
+  cout << "north" << endl << endl;
 }
 
-/*void createRooms(vector<room*> &Rooms) {
- 
-  }*/
 
 void getHelp() {
   cout << endl << "Your command words are: " << "help, go, inventory, get, drop, quit" << endl << endl;
