@@ -9,6 +9,7 @@ using namespace std;
 class room {
  public:
   room();
+  // Room variables
   char description[1000];
   int roomID;
   map<char*, room*> exits;
@@ -24,7 +25,8 @@ class room {
   bool hasExitS;
 
   char* getDescription();
-  
+
+  // Room function prototypes
   void setRoomID(int x);
   void setExit(char* dir, room* room);
   room* getExit(char* input);
@@ -33,7 +35,8 @@ class room {
   //void setExitN(int b);
   //void setExitE(int c);
   //void setExitS(int d);
-  
+
+  // Room booleans for items
   bool hasBedroomKey;
   bool hasGrandKey;
   bool hasCoins;

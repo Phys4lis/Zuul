@@ -10,6 +10,7 @@ room::room() {
   
 }
 
+// Room functions
 char* room::getDescription() {
   return description;
 }
